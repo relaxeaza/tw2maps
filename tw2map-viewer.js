@@ -25,7 +25,6 @@ var popupController = (function () {
     var visible = false
     var initialized = false
     var enabled = true
-    var lastState
 
     function init () {
         initialized = true
@@ -44,7 +43,7 @@ var popupController = (function () {
         }
 
         visible = true
-        $tooltip.style.display = ''
+        $tooltip.style.display = 'block'
     }
 
     function hide () {
@@ -79,17 +78,11 @@ var popupController = (function () {
     }
 
     function disable () {
-        lastState = visible ? 'visible' : 'hidden'
-        hide()
         enabled = false
     }
 
-    function enable (restore) {
+    function enable () {
         enabled = true
-
-        if (restore) {
-            lastState === 'visible' ? show() : hide()
-        }
     }
 
     return {
@@ -270,9 +263,10 @@ var mapController = (function () {
 
         function start (e) {
             popupController.disable()
+            popupController.hide()
             freeze()
 
-            if (!DATA.villages[mouseCoordX] || !DATA.villages[mouseCoordX][mouseCoordY]) {
+            if (!hoverVillage) {
                 document.body.style.cursor = 'move'
             }
 
@@ -287,9 +281,13 @@ var mapController = (function () {
         }
 
         function end (e) {
-            popupController.enable(true)
-            unfreeze()
+            popupController.enable()
 
+            if (hoverVillage) {
+                popupController.show()
+            }
+
+            unfreeze()
             document.body.style.cursor = ''
             draggable = false
             dragStart = {}
@@ -297,6 +295,7 @@ var mapController = (function () {
 
         function move (e) {
             if (!draggable) return
+            document.body.style.cursor = 'move'
             currentPosition.x = (dragStart.x - e.pageX)
             currentPosition.y = (dragStart.y - e.pageY)
             updateCoordsCenter()
