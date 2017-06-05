@@ -309,6 +309,8 @@ var mapController = (function () {
             // document.body.style.cursor = 'move'
             currentPosition.x = (dragStart.x - pageX)
             currentPosition.y = (dragStart.y - pageY)
+
+            updateCoordsCenter()
         }
 
         overlayCanvas.addEventListener('mousedown', start)
@@ -320,6 +322,14 @@ var mapController = (function () {
             overlayCanvas.addEventListener('touchend', end)
             overlayCanvas.addEventListener('touchmove', move)
         }
+    }
+
+    function updateCoordsCenter () {
+        var positionCorrection = getPositionCorrection()
+        var x = Math.floor((positionCorrection.x + (frameSize.x / 2)) / villageBlock)
+        var y = Math.floor((positionCorrection.y + (frameSize.y / 2)) / villageBlock)
+        
+        coordsElem.innerHTML = x + '|' + y
     }
 
     function mouseToCoordsWatcher () {
@@ -346,7 +356,6 @@ var mapController = (function () {
             mouseCoordX = Math.floor((positionCorrection.x + x) / villageBlock)
             mouseCoordY = Math.floor((positionCorrection.y + y) / villageBlock)
 
-            updateCoordsCenter()
             triggerCoordEvents()
         }
 
@@ -358,13 +367,7 @@ var mapController = (function () {
         }
     }
 
-    function updateCoordsCenter () {
-        var positionCorrection = getPositionCorrection()
-        var x = Math.floor((positionCorrection.x) / villageBlock)
-        var y = Math.floor((positionCorrection.y) / villageBlock)
-        
-        coordsElem.innerHTML = x + '|' + y
-    }
+
 
     function setPointerCursor () {
         document.body.style.cursor = 'pointer'
