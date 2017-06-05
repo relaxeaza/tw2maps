@@ -20,7 +20,7 @@ var isMobile = (function () {
 
 var DATA
 
-var popupController = (function () {
+var tooltipController = (function () {
     var $tooltip = document.getElementById('tooltip')
     var visible = false
     var initialized = false
@@ -262,8 +262,8 @@ var mapController = (function () {
         var dragStart = {}
 
         function start (e) {
-            popupController.disable()
-            popupController.hide()
+            tooltipController.disable()
+            tooltipController.hide()
             freeze()
 
             if (!hoverVillage) {
@@ -281,10 +281,10 @@ var mapController = (function () {
         }
 
         function end (e) {
-            popupController.enable()
+            tooltipController.enable()
 
             if (hoverVillage) {
-                popupController.show()
+                tooltipController.show()
             }
 
             unfreeze()
@@ -362,8 +362,6 @@ var mapController = (function () {
         }
     }
 
-
-
     function setPointerCursor () {
         document.body.style.cursor = 'pointer'
     }
@@ -392,9 +390,9 @@ var mapController = (function () {
         var player = DATA.players[village[3]]
         var tribe = player ? DATA.tribes[player[2]] : false
 
-        if (popupController.isInitialized()) {
-            popupController.data(hoverVillage, player, tribe)
-            popupController.show()
+        if (tooltipController.isInitialized()) {
+            tooltipController.data(hoverVillage, player, tribe)
+            tooltipController.show()
         }
 
         clearOverlay()
@@ -413,8 +411,8 @@ var mapController = (function () {
 
         hoverVillage = false
 
-        if (popupController.isInitialized()) {
-            popupController.hide()
+        if (tooltipController.isInitialized()) {
+            tooltipController.hide()
         }
 
         clearOverlay()
@@ -571,7 +569,7 @@ ajaxGet('br20.json', function (data) {
     document.querySelector('#loading').style.display = 'none'
 
     mapController.init()
-    popupController.init()
+    tooltipController.init()
     customController.init()
 
     customController.add('S.F', 'blue')
