@@ -192,6 +192,7 @@ var mapController = (function () {
     var baseCacheCtx = baseCacheCanvas.getContext('2d')
     var overlayCanvas = document.getElementById('overlay')
     var overlayCtx = overlayCanvas.getContext('2d')
+    var coordsElem = document.getElementById('coords')
 
     var initialized = false
     var villageSize
@@ -345,6 +346,7 @@ var mapController = (function () {
             mouseCoordX = Math.floor((positionCorrection.x + x) / villageBlock)
             mouseCoordY = Math.floor((positionCorrection.y + y) / villageBlock)
 
+            updateCoordsCenter()
             triggerCoordEvents()
         }
 
@@ -354,6 +356,14 @@ var mapController = (function () {
             overlayCanvas.addEventListener('touchmove', move)
             overlayCanvas.addEventListener('touchstart', move)
         }
+    }
+
+    function updateCoordsCenter () {
+        var positionCorrection = getPositionCorrection()
+        var x = Math.floor((positionCorrection.x) / villageBlock)
+        var y = Math.floor((positionCorrection.y) / villageBlock)
+        
+        coordsElem.innerHTML = x + '|' + y
     }
 
     function setPointerCursor () {
