@@ -240,6 +240,10 @@ var mapController = (function () {
         renderCache()
         dragMapWatcher()
 
+        overlayCanvas.addEventListener('mouseleave', function () {
+            tooltipController.hide()
+        })
+
         function renderLoop () {
             mapController.renderBase()
             mapController.renderOverlay()
