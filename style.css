@@ -52,6 +52,7 @@ body {
     left: 20px;
     top: 20px;
     z-index: 15;
+    pointer-events: none;
 }
 
 #custom ul {
@@ -59,6 +60,12 @@ body {
     list-style-type: none;
     margin: 5px 0 0 5px;
     padding: 0;
+    width: 100px;
+}
+
+#custom li {
+    pointer-events: auto;
+    white-space: nowrap;
 }
 
 #custom input {
@@ -66,6 +73,7 @@ body {
     background: rgba(255,255,255,0.8);
     border: 1px solid #444;
     padding: 2px 5px;
+    pointer-events: auto;
 }
 
 #custom .color {
@@ -74,6 +82,7 @@ body {
     display: inline-block;
     box-shadow: 1px 1px 1px #000;
     border-radius: 5px;
+    pointer-events: auto;
 }
 
 #custom span {
