@@ -4,6 +4,7 @@ body {
     font-size: 14px;
     overflow: hidden;
     user-select: none;
+    background: #436213;
 }
 
 #map {
@@ -25,7 +26,7 @@ body {
     position: absolute;
     background: rgba(0,0,0, 0.85);
     color: #eee;
-    z-index: 100;
+    z-index: 20;
     display: inline-table;
     padding: 6px;
     border-radius: 3px;
@@ -47,7 +48,7 @@ body {
     position: fixed;
     left: 20px;
     top: 20px;
-    z-index: 100;
+    z-index: 15;
 }
 
 #custom ul {
@@ -75,6 +76,20 @@ body {
 
 #custom span {
     cursor: pointer;
+}
+
+#loading {
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #fff;
+    font-size: 1.6em;
+    text-align: center;
+    line-height: 200px;
+    z-index: 30;
 }
 
 /*::-webkit-scrollbar {

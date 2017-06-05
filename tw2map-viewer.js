@@ -63,8 +63,11 @@ var popupController = (function () {
         var html = ''
 
         html += village.name + ' (' + village.x + '|' + village.y + ') | ' + village.points + ' pts'
-        html += '<br>'
-        html += player[0] + ' | ' + player[1] + ' pts'
+        
+        if (player) {
+            html += '<br>'
+            html += player[0] + ' | ' + player[1] + ' pts'
+        }
 
         if (tribe) {
             html += '<br>'
@@ -379,7 +382,7 @@ var mapController = (function () {
         }
 
         var player = DATA.players[village[3]]
-        var tribe = DATA.tribes[player[2]]
+        var tribe = player ? DATA.tribes[player[2]] : false
 
         if (popupController.isInitialized()) {
             popupController.data(hoverVillage, player, tribe)
@@ -429,13 +432,17 @@ var mapController = (function () {
 
             for (var y in xVillages) {
                 var village = xVillages[y]
-
                 var player = DATA.players[village[3]]
-                var playerLowerCase = player[0].toLowerCase()
-                var tribe = player[2] ? DATA.tribes[player[2]] : false
-                var tribeLowerCase = tribe ? tribe[1].toLowerCase() : false
 
-                if (playerLowerCase in customColors.players) {
+                if (player) {
+                    var playerLowerCase = player[0].toLowerCase()
+                    var tribe = player[2] ? DATA.tribes[player[2]] : false
+                    var tribeLowerCase = tribe ? tribe[1].toLowerCase() : false
+                }
+
+                if (!player) {
+                    baseCacheCtx.fillStyle = '#4c6f15'
+                } else if (playerLowerCase in customColors.players) {
                     baseCacheCtx.fillStyle = customColors.players[playerLowerCase].color
                 } else if (tribe && tribeLowerCase in customColors.tribes) {
                     baseCacheCtx.fillStyle = customColors.tribes[tribeLowerCase].color
@@ -483,6 +490,12 @@ var mapController = (function () {
             return false
         }
 
+        renderVillageBorder()
+
+        if (!hoverVillage.pid) {
+            return false
+        }
+
         var villages = DATA.playerVillages[hoverVillage.pid]
         var positionCorrection = getPositionCorrection()
 
@@ -495,6 +508,10 @@ var mapController = (function () {
                 villageSize,
                 villageSize )
         })
+    }
+
+    function renderVillageBorder () {
+        var positionCorrection = getPositionCorrection()
 
         var hoverVillageX = mouseCoordX * villageBlock - positionCorrection.x - 1
         var hoverVillageY = mouseCoordY * villageBlock - positionCorrection.y - 1
@@ -543,6 +560,8 @@ var mapController = (function () {
 ajaxGet('br20.json', function (data) {
     DATA = JSON.parse(data)
 
+    document.querySelector('#loading').style.display = 'none'
+
     mapController.init()
     popupController.init()
     customController.init()
@@ -552,4 +571,6 @@ ajaxGet('br20.json', function (data) {
     customController.add('ACA', '#00a0f4')
     customController.add('U.M', 'red')
     mapController.renderCache()
+
+
 })
