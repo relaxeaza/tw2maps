@@ -1,0 +1,92 @@
+body {
+    margin: 0;
+    font-family: 'Monaco', 'monospace';
+    font-size: 14px;
+    overflow: hidden;
+    user-select: none;
+}
+
+#map {
+    background: #436213;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+}
+
+#overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+}
+
+#tooltip {
+    position: absolute;
+    background: rgba(0,0,0, 0.85);
+    color: #eee;
+    z-index: 100;
+    display: inline-table;
+    padding: 6px;
+    border-radius: 3px;
+    box-shadow: 2px 2px 2px #000;
+}
+
+#tooltip span {
+    white-space: nowrap;
+}
+
+@media only screen and (max-width: 768px) {
+    #tooltip {
+        left: 10px;
+        bottom: 10px;
+    }
+}
+
+#custom {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    z-index: 100;
+}
+
+#custom ul {
+    text-shadow: 0px 1px 1px #000;
+    list-style-type: none;
+    margin: 5px 0 0 5px;
+    padding: 0;
+    color: #fff;
+}
+
+#custom input {
+    font-family: 'Monaco', 'monospace';
+    background: rgba(255,255,255,0.8);
+    border: 1px solid #444;
+    padding: 2px 5px;
+}
+
+#custom .color {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    box-shadow: 1px 1px 1px #000;
+    border-radius: 5px;
+}
+
+#custom span {
+    cursor: pointer;
+}
+
+/*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-corner {
+    background: #6f6e1a;
+}*/
