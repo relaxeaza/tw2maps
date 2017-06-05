@@ -30,15 +30,12 @@ var popupController = (function () {
     function init () {
         initialized = true
 
-        function move (e) {
-            var pageX = isMobile ? e.touches[0].pageX : e.pageX
-            var pageY = isMobile ? e.touches[0].pageY : e.pageY
-
-            $tooltip.style.left = 15 + pageX + 'px'
-            $tooltip.style.top = 5 + pageY + 'px'
+        if (!isMobile) {
+            document.body.addEventListener('mousemove', function (e) {
+                $tooltip.style.left = 15 + e.pageX + 'px'
+                $tooltip.style.top = 5 + e.pageY + 'px'
+            })
         }
-
-        document.body.addEventListener('mousemove', move)
     }
 
     function show () {
@@ -272,8 +269,6 @@ var mapController = (function () {
         var dragStart = {}
 
         function start (e) {
-            e.preventDefault()
-
             popupController.disable()
             freeze()
 
@@ -302,25 +297,26 @@ var mapController = (function () {
 
         function move (e) {
             if (!draggable) return
-
-            var pageX = isMobile ? e.touches[0].pageX : e.pageX
-            var pageY = isMobile ? e.touches[0].pageY : e.pageY
-
-            // document.body.style.cursor = 'move'
-            currentPosition.x = (dragStart.x - pageX)
-            currentPosition.y = (dragStart.y - pageY)
-
+            currentPosition.x = (dragStart.x - e.pageX)
+            currentPosition.y = (dragStart.y - e.pageY)
             updateCoordsCenter()
         }
 
-        overlayCanvas.addEventListener('mousedown', start)
-        overlayCanvas.addEventListener('mouseup', end)
-        overlayCanvas.addEventListener('mousemove', move)
+        function mobileMove (e) {
+            if (!draggable) return
+            currentPosition.x = (dragStart.x - e.touches[0].pageX)
+            currentPosition.y = (dragStart.y - e.touches[0].pageY)
+            updateCoordsCenter()
+        }
 
         if (isMobile) {
-            overlayCanvas.addEventListener('touchstart', start)
+            overlayCanvas.addEventListener('touchstart', start, {passive: true})
             overlayCanvas.addEventListener('touchend', end)
-            overlayCanvas.addEventListener('touchmove', move)
+            overlayCanvas.addEventListener('touchmove', mobileMove, {passive: true})
+        } else {
+            overlayCanvas.addEventListener('mousedown', start)
+            overlayCanvas.addEventListener('mouseup', end)
+            overlayCanvas.addEventListener('mousemove', move)
         }
     }
 
@@ -359,11 +355,11 @@ var mapController = (function () {
             triggerCoordEvents()
         }
 
-        overlayCanvas.addEventListener('mousemove', move)
-
         if (isMobile) {
-            overlayCanvas.addEventListener('touchmove', move)
-            overlayCanvas.addEventListener('touchstart', move)
+            overlayCanvas.addEventListener('touchmove', move, {passive: true})
+            overlayCanvas.addEventListener('touchstart', move, {passive: true})
+        } else {
+            overlayCanvas.addEventListener('mousemove', move)
         }
     }
 
