@@ -217,7 +217,21 @@ var mapController = (function () {
             })
 
             window.addEventListener('mousewheel', function (e) {
-                e.wheelDeltaY > 0 ? villageSize++ : villageSize--
+                if (e.wheelDeltaY > 0) {
+                    if (villageSize >= 10) {
+                        return
+                    }
+
+                    villageSize++
+                } else {
+                    if (villageSize <= 1) {
+                        return
+                    }
+
+                    villageSize--
+                }
+
+                console.log(villageSize)
 
                 villageBlock = villageSize + villageMargin
                 currentPosition.x = centerCoordX * villageBlock
