@@ -190,6 +190,8 @@ var mapController = (function () {
     var villageBlock
     var mouseCoordX
     var mouseCoordY
+    var centerCoordX
+    var centerCoordY
     var hoverVillage
     var freezeState = false
     var frameSize = {}
@@ -213,11 +215,21 @@ var mapController = (function () {
                     init(villageSize, villageMargin, x, y)
                 }, 100)
             })
+
+            window.addEventListener('mousewheel', function (e) {
+                e.wheelDeltaY > 0 ? villageSize++ : villageSize--
+
+                villageBlock = villageSize + villageMargin
+                currentPosition.x = centerCoordX * villageBlock
+                currentPosition.y = centerCoordY * villageBlock
+
+                renderCache()
+            })
         }
 
         initialized = true
         frameSize = { x: window.innerWidth, y: window.innerHeight }
-        villageSize = _villageSize || (isMobile ? 6 : 4)
+        villageSize = _villageSize || (isMobile ? 6 : 10)
         villageMargin = _villageMargin || 1
         villageBlock = villageSize + villageMargin
 
@@ -325,10 +337,10 @@ var mapController = (function () {
 
     function updateCoordsCenter () {
         var positionCorrection = getPositionCorrection()
-        var x = Math.floor((positionCorrection.x + (frameSize.x / 2)) / villageBlock)
-        var y = Math.floor((positionCorrection.y + (frameSize.y / 2)) / villageBlock)
+        centerCoordX = Math.floor((positionCorrection.x + (frameSize.x / 2)) / villageBlock)
+        centerCoordY = Math.floor((positionCorrection.y + (frameSize.y / 2)) / villageBlock)
         
-        coordsElem.innerHTML = x + '|' + y
+        coordsElem.innerHTML = centerCoordX + '|' + centerCoordY
     }
 
     function mouseToCoordsWatcher () {
