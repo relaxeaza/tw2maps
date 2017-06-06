@@ -190,8 +190,8 @@ var mapController = (function () {
     var villageBlock
     var mouseCoordX
     var mouseCoordY
-    var centerCoordX
-    var centerCoordY
+    var centerCoordX = 500
+    var centerCoordY = 500
     var hoverVillage
     var freezeState = false
     var frameSize = {}
