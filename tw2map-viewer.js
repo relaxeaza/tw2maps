@@ -229,7 +229,7 @@ var mapController = (function () {
 
         initialized = true
         frameSize = { x: window.innerWidth, y: window.innerHeight }
-        villageSize = _villageSize || (isMobile ? 6 : 10)
+        villageSize = _villageSize || (isMobile ? 6 : 4)
         villageMargin = _villageMargin || 1
         villageBlock = villageSize + villageMargin
 
@@ -486,9 +486,14 @@ var mapController = (function () {
 
         baseCacheCtx.fillStyle = 'rgba(0,0,0,0.3)'
 
-        for (var i = 1; i < 100; i++) {
-            baseCacheCtx.fillRect(i * 100 * villageBlock - 1, 0, 1, lineSize)
-            baseCacheCtx.fillRect(0, i * 100 * villageBlock - 1, lineSize, 1)
+        for (var i = 0; i < 11; i++) {
+            if (i !== 0) {
+                baseCacheCtx.fillRect(i * 100 * villageBlock - 1, 0, 1, lineSize)
+                baseCacheCtx.fillRect(0, i * 100 * villageBlock - 1, lineSize, 1)
+            } else {
+                baseCacheCtx.fillRect(0, 0, 1, lineSize)
+                baseCacheCtx.fillRect(0, 0, lineSize, 1)
+            }
         }
 
         baseCacheCtx.fillStyle = 'rgba(0,0,0,0.1)'
@@ -592,7 +597,7 @@ ajaxGet('br20.json', function (data) {
     customController.add('ACD', '#00a0f4')
     customController.add('ACA', '#00a0f4')
     customController.add('U.M', 'red')
-    mapController.renderCache()
+    // mapController.renderCache()
 
 
 })
