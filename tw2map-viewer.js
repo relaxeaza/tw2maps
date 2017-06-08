@@ -278,13 +278,13 @@ var mapController = (function () {
     function zoomDesktop (to) {
         if (to === 'in') {
             if (villageSize >= 6) {
-                return
+                return false
             }
 
             villageSize++
         } else {
             if (villageSize <= 1) {
-                return
+                return false
             }
 
             villageSize--
@@ -292,10 +292,10 @@ var mapController = (function () {
     }
 
     function zoom (to) {
-        if (isMobile) {
-            zoomMobile(to)
-        } else {
-            zoomDesktop(to)
+        if (isMobile && zoomMobile(to) === false) {
+            return
+        } else if (zoomDesktop(to) === false) {
+            return
         }
 
         if (villageSize < 2) {
