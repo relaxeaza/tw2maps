@@ -667,7 +667,9 @@ var mapController = (function () {
     }
 })()
 
-qwest.get('br20.json').then(function (data) {
+var loadWorld = 'br20'
+
+qwest.get('data/latest/' + loadWorld + '.json').then(function (data) {
     DATA = JSON.parse(data.response)
 
     document.querySelector('#loading').style.display = 'none'
