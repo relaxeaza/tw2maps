@@ -262,17 +262,19 @@ var mapController = (function () {
     function zoomMobile (to) {
         if (to === 'in') {
             if (villageSize >= 8) {
-                return
+                return false
             }
 
             villageSize++
         } else {
             if (villageSize <= 1) {
-                return
+                return false
             }
 
             villageSize--
         }
+
+        return true
     }
 
     function zoomDesktop (to) {
@@ -289,13 +291,19 @@ var mapController = (function () {
 
             villageSize--
         }
+
+        return true
     }
 
     function zoom (to) {
-        if (isMobile && zoomMobile(to) === false) {
-            return
-        } else if (zoomDesktop(to) === false) {
-            return
+        if (isMobile) {
+            if (!zoomMobile(to)) {
+                return false
+            }
+        } else {
+            if (!zoomDesktop(to)) {
+                return
+            }
         }
 
         if (villageSize < 2) {
