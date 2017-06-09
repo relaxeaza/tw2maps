@@ -219,6 +219,10 @@ var mapController = (function () {
                     zoom('out')
                 })
             }
+
+            if (DATA.updated) {
+                document.getElementById('updated').innerHTML = DATA.updated
+            }
         }
 
         initialized = true
