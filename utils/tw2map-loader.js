@@ -1,4 +1,6 @@
 /*
+    run this script inside of the game (logged)
+
     data.villages {
         x: {
             y: [ id, name, points, player_id ],
