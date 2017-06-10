@@ -1,4 +1,6 @@
 /*
+    run this script inside of the game (logged)
+
     data.villages {
         x: {
             y: [ id, name, points, player_id ],
@@ -26,6 +28,7 @@ var getWorldData = (function () {
     var eventTypeProvider = injector.get('eventTypeProvider')
     var routeProvider = injector.get('routeProvider')
     var $rootScope = angular.element(document).scope()
+    var $timeHelper = require('helper/time')
 
     // settings
     var allowBarbarians
@@ -53,6 +56,21 @@ var getWorldData = (function () {
             width: blockSize,
             height: blockSize
         }, callback)
+    }
+
+    function setUpdatedTime () {
+        var date = $timeHelper.gameDate()
+        var secs = date.getSeconds()
+        var mins = date.getMinutes()
+        var hours = date.getHours()
+        var day = date.getDate()
+        var month = date.getMonth()
+        var year = date.getFullYear()
+
+        day = day < 10 ? '0' + day : day
+        month = month < 10 ? '0' + month : month
+
+        data.updated = day + '/' + month + '/' + year + ' ' + secs + ':' + mins + ':' + hours
     }
 
     function hasPlayer (pid) {
@@ -159,7 +177,10 @@ var getWorldData = (function () {
                     finalProcess()
                 }
 
-                return finishCallback(data)
+                setUpdatedTime()
+                finishCallback(data)
+
+                return
             }
 
             handleLoop()
@@ -172,9 +193,10 @@ var getWorldData = (function () {
 
     function start (settings, onFinish) {
         settings = settings || {}
-        allowBarbarians = settings.allowBarbarians || false
-        includeVillagePerPlayer = settings.includeVillagePerPlayer || true
+        allowBarbarians = settings.allowBarbarians || true
+        includeVillagePerPlayer = settings.includeVillagePerPlayer || false
         finishCallback = onFinish || function () {}
+        includeDate = settings.includeDate || false
 
         handleLoop()
     }
@@ -187,7 +209,8 @@ var getWorldData = (function () {
 
 getWorldData.start({
     allowBarbarians: true,
-    includeVillagePerPlayer: true
+    includeVillagePerPlayer: true,
+    includeDate: true
 }, function onFinish (data) {
     console.log('finished')
 
