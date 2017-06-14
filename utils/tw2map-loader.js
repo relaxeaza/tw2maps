@@ -33,7 +33,8 @@ var getWorldData = (function () {
     // settings
     var allowBarbarians
     var includeVillagePerPlayer
-    var finishCallback = function () {}
+    var finishCallback
+    var includeDate
 
     var data = {
         villages: {},
