@@ -680,7 +680,7 @@ qwest.get('data/latest/' + loadWorld + '.json').then(function (data) {
 
     customController.add('S.F', 'blue')
     customController.add('ACD', '#00a0f4')
-    customController.add('ACA', '#00a0f4')
+    customController.add('ADA', '#00a0f4')
     customController.add('ODE', '#0070ab')
     customController.add('VMP', '#0070ab')
     customController.add('RG1', '#0070ab')
