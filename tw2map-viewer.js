@@ -227,7 +227,7 @@ var mapController = (function () {
 
         initialized = true
         frameSize = { x: window.innerWidth, y: window.innerHeight }
-        villageSize = _villageSize || (isMobile ? 6 : 4)
+        villageSize = _villageSize || (isMobile ? 6 : 3)
         villageMargin = _villageMargin || 1
         villageBlock = villageSize + villageMargin
 
