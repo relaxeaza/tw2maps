@@ -71,7 +71,7 @@ var getWorldData = (function () {
         day = day < 10 ? '0' + day : day
         month = month < 10 ? '0' + month : month
 
-        data.updated = day + '/' + month + '/' + year + ' ' + secs + ':' + mins + ':' + hours
+        data.updated = day + '/' + month + '/' + year + ' ' + hours + ':' + mins + ':' + secs
     }
 
     function hasPlayer (pid) {
