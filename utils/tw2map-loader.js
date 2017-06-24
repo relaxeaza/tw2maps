@@ -61,11 +61,11 @@ var getWorldData = (function () {
 
     function setUpdatedTime () {
         var date = $timeHelper.gameDate()
-        var secs = date.getSeconds()
-        var mins = date.getMinutes()
-        var hours = date.getHours()
-        var day = date.getDate()
-        var month = date.getMonth()
+        var secs = zeroPad(date.getSeconds(), 2)
+        var mins = zeroPad(date.getMinutes(), 2)
+        var hours = zeroPad(date.getHours(), 2)
+        var day = zeroPad(date.getDate(), 2)
+        var month = zeroPad(date.getMonth(), 2)
         var year = date.getFullYear()
 
         day = day < 10 ? '0' + day : day
@@ -200,6 +200,14 @@ var getWorldData = (function () {
         includeDate = settings.includeDate || false
 
         handleLoop()
+    }
+
+    function zeroPad (number, width) {
+        number = number + ''
+
+        return number.length >= width
+            ? number
+            : new Array(width - number.length + 1).join('0') + number
     }
 
     return {
